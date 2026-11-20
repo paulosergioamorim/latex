@@ -36,7 +36,7 @@ figures/           imagens (já configurado em \graphicspath)
 tables/            tabelas
 bib/               arquivos .bib
 .latexmkrc         configuração do latexmk
-.github/workflows/ compilação no GitHub Actions (container archlinux)
+.github/workflows/ compilação no GitHub Actions
 ```
 
 ## Português
@@ -48,12 +48,11 @@ parte do grupo `texlive`:
 sudo pacman -S texlive-langportuguese
 ```
 
-Depois adicione `\usepackage[brazilian]{babel}` em `preamble.tex` e o mesmo
-pacote na etapa de instalação do workflow.
+Depois adicione `\usepackage[brazilian]{babel}` em `preamble.tex` .
 
 ## CI
 
-A cada push o workflow compila `main.tex` em um container `archlinux:latest`.
+A cada push o workflow compila `main.tex` com a action `xu-cheng/latex-action`.
 
 No branch `main`, o PDF é publicado na release `latest`, visível na lateral da
 página do repositório, com link direto:
