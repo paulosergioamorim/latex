@@ -48,7 +48,7 @@ parte do grupo `texlive`:
 sudo pacman -S texlive-langportuguese
 ```
 
-Depois adicione `\usepackage[brazilian]{babel}` em `preamble.tex` .
+Depois adicione `\usepackage[brazilian]{babel}` em `preamble.tex`.
 
 ## CI
 
