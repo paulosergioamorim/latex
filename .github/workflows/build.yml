@@ -5,13 +5,16 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     container: archlinux:latest
     steps:
       - name: Instalar dependências
-        run: pacman -Syu --noconfirm --needed git make texlive-basic texlive-latex texlive-latexrecommended texlive-latexextra texlive-binextra texlive-fontsrecommended
+        run: pacman -Syu --noconfirm --needed git make github-cli texlive-basic texlive-latex texlive-latexrecommended texlive-latexextra texlive-binextra texlive-fontsrecommended
 
       - uses: actions/checkout@v4
 
@@ -19,6 +22,16 @@ jobs:
         run: make
 
       - uses: actions/upload-artifact@v4
+        if: github.ref != 'refs/heads/main'
         with:
           name: main-pdf
           path: build/main.pdf
+
+      - name: Publicar release
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release delete latest --cleanup-tag --yes || true
+          gh release create latest build/main.pdf --target "$GITHUB_SHA" --title "PDF mais recente" --notes "Gerado a partir de $GITHUB_SHA" --latest

@@ -53,5 +53,11 @@ pacote na etapa de instalação do workflow.
 
 ## CI
 
-A cada push o workflow compila `main.tex` em um container `archlinux:latest`
-e disponibiliza o PDF como artefato `main-pdf` na aba Actions.
+A cada push o workflow compila `main.tex` em um container `archlinux:latest`.
+
+No branch `main`, o PDF é publicado na release `latest`, visível na lateral da
+página do repositório, com link direto:
+
+https://github.com/paulosergioamorim/latex/releases/latest/download/main.pdf
+
+Nos demais branches, o PDF fica como artefato `main-pdf` na aba Actions.
