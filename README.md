@@ -1,14 +1,23 @@
 # Template LaTeX
 
-Template para desenvolvimento local de documentos LaTeX no Arch Linux.
+Template para desenvolvimento local de documentos LaTeX no Arch Linux e em sistemas baseados em Debian.
 
 ## Dependências
+
+Arch Linux:
 
 ```bash
 sudo pacman -S --needed texlive make
 ```
 
 O grupo `texlive` já inclui `pdflatex`, `bibtex` e `latexmk`.
+
+Debian, Ubuntu e derivados (apt):
+
+```bash
+sudo apt update
+sudo apt install texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-bibtex-extra latexmk make
+```
 
 ## Uso
 
@@ -41,22 +50,29 @@ bib/               arquivos .bib
 
 ## Português
 
-Hifenização em português exige o pacote `texlive-langportuguese`, que não faz
-parte do grupo `texlive`:
+Hifenização em português exige um pacote de idioma extra.
+
+Arch Linux:
 
 ```bash
 sudo pacman -S texlive-langportuguese
+```
+
+Debian, Ubuntu e derivados:
+
+```bash
+sudo apt install texlive-lang-portuguese
 ```
 
 Depois adicione `\usepackage[brazilian]{babel}` em `preamble.tex`.
 
 ## CI
 
-A cada push o workflow compila `main.tex` com a action `xu-cheng/latex-action`.
+O workflow roda apenas ao subir uma tag cujo commit esteja na `main`. Ele
+compila `main.tex` com a action `xu-cheng/latex-action` e cria uma release com
+o título "Artefato" e o `main.pdf` anexado:
 
-No branch `main`, o PDF é publicado na release `latest`, visível na lateral da
-página do repositório, com link direto:
-
-https://github.com/paulosergioamorim/latex/releases/latest/download/main.pdf
-
-Nos demais branches, o PDF fica como artefato `main-pdf` na aba Actions.
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
